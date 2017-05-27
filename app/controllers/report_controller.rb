@@ -4,7 +4,7 @@ class ReportController < ApplicationController
   before_action :find_project, :authorize
 
   def index
-    @issues = @project.issues.includes(:custom_values)
+    @issues = @project.issues.includes(:custom_values).joins(:status).where('issue_statuses.is_closed = ?', false)
     @issues_to_score = @issues.map do |issue|
       score = nil
       reach = nil, confidence = nil, impact = nil
