@@ -6,6 +6,7 @@
             <th>#</th>
             <th>Subject</th>
             <th>Assignee</th>
+            <th>Priority</th>
             <th>Score</th>
         </tr>
     </thead>
@@ -14,7 +15,8 @@
             <tr>
                 <td class="id"><%= link_to is[0].id, issue_path(is[0].id) %></td>
                 <td><%= link_to is[0].subject, issue_path(is[0].id) %></td>
-                <td><%= is[0].assigned_to.try(:name) %></td>
+                <td><%= is[0].assigned_to %></td>
+                <td><%= is[0].priority %></td>
                 <td><%= is[1] %></td>
             </tr>
         <% end -%>

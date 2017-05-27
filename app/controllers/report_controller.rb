@@ -28,7 +28,7 @@ class ReportController < ApplicationController
     end
 
     @issues_to_score.reject! { |is| is[1].nil? }
-    @issues_to_score.sort! { |a, b| a[1] <=> b[1] }
+    @issues_to_score.sort! { |a, b| [a[0].priority, a[1]] <=> [b[0].priority, b[1]] }
     @issues_to_score.reverse!
 
     @issues_without_score = @issues.reject do |issue|
