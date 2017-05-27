@@ -20,11 +20,7 @@ class ReportController < ApplicationController
       end
 
       if !reach.nil? && !impact.nil? && !confidence.nil? && !issue.estimated_hours.nil? && issue.estimated_hours != 0
-        reach_weight = Setting.plugin_rice_reports['reach_weight'].to_f
-        impact_weight = Setting.plugin_rice_reports['impact_weight'].to_f
-        confidence_weight = Setting.plugin_rice_reports['confidence_weight'].to_f
-
-        score = ((reach_weight * reach) + (impact_weight * impact) + (confidence_weight * confidence)) / (issue.estimated_hours / 160)
+        score = (reach * impact * confidence) / (issue.estimated_hours / 160)
         score = score.round(2)
       end
 
