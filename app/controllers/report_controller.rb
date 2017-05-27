@@ -24,7 +24,7 @@ class ReportController < ApplicationController
         impact_weight = Setting.plugin_rice_reports['impact_weight'].to_f
         confidence_weight = Setting.plugin_rice_reports['confidence_weight'].to_f
 
-        score = ((reach_weight * reach) * (impact_weight * impact) * (confidence_weight * confidence)) / (issue.estimated_hours / 160)
+        score = ((reach_weight * reach) + (impact_weight * impact) + (confidence_weight * confidence)) / (issue.estimated_hours / 160)
         score = score.round(2)
       end
 

@@ -11,7 +11,7 @@ Redmine::Plugin.register :rice_reports do
 
   settings default: {
     'reach_weight' => 1,
-    'impact_weight' => 1,
-    'confidence_weight' => 1
+    'impact_weight' => 4,
+    'confidence_weight' => 2
   }, partial: 'settings/rice_reports_settings'
 end
