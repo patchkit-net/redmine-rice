@@ -4,7 +4,9 @@ class ReportController < ApplicationController
   before_action :find_project, :authorize
 
   def index
-    @issues = @project.issues.includes(:custom_values).joins(:status).where('issue_statuses.is_closed = ?', false)
+    #@issues = @project.issues.includes(:custom_values).joins(:status).where('issue_statuses.is_closed = ?', false)
+    #@issues = @project.issues.joins(:status).where('issue_statuses.is_closed = ?', false)
+    @issues = collect_issues_recursively(@project)
     @issues_to_score = @issues.map do |issue|
       score = nil
       reach = nil, confidence = nil, impact = nil
@@ -34,6 +36,14 @@ class ReportController < ApplicationController
     @issues_without_score = @issues.reject do |issue|
       @issues_to_score.any? { |its| its[0] == issue }
     end
+  end
+
+  def collect_issues_recursively(project)
+    issues = project.issues.joins(:status).where('issue_statuses.is_closed = ?', false).all
+    project.children.each do |child_project|
+      issues += collect_issues_recursively(child_project)
+    end
+    issues
   end
 
   private

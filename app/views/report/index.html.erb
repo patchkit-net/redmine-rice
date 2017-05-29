@@ -4,6 +4,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>Project</th>
             <th>Subject</th>
             <th>Assignee</th>
             <th>Priority</th>
@@ -14,6 +15,7 @@
         <% @issues_to_score.each do |is| %>
             <tr>
                 <td class="id"><%= link_to is[0].id, issue_path(is[0].id) %></td>
+                <td><%= link_to is[0].project, project_path(is[0].project) %></td>
                 <td><%= link_to is[0].subject, issue_path(is[0].id) %></td>
                 <td><%= is[0].assigned_to %></td>
                 <td><%= is[0].priority %></td>
@@ -29,6 +31,7 @@
     <thead>
         <tr>
             <th>#</th>
+            <th>Project</th>
             <th>Subject</th>
             <th>Assignee</th>
         </tr>
@@ -37,6 +40,7 @@
         <% @issues_without_score.each do |issue| %>
             <tr>
                 <td class="id"><%= link_to issue.id, issue_path(issue.id) %></td>
+                <td><%= link_to issue.project, project_path(issue.project) %></td>
                 <td><%= link_to issue.subject, issue_path(issue.id) %></td>
                 <td><%= issue.assigned_to.try(:name) %></td>
             </tr>
