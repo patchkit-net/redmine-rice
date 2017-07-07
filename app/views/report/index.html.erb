@@ -1,5 +1,15 @@
 <h2>RICE</h2>
 
+<p>
+    <% if @hide_resolved %>
+        Resolved issues are now <b>hidden</b>.
+        <%= link_to 'Show resolved issues.', "/rice_report?project_id=#{@project.id}" %>
+    <% else %>
+        Resolved issues are now <b>shown</b>.
+        <%= link_to 'Hide resolved issues.', "/rice_report?project_id=#{@project.id}&hide_resolved=1" %>
+    <% end %>
+</p>
+
 <table class="list issues">
     <thead>
         <tr>
@@ -8,6 +18,7 @@
             <th>Subject</th>
             <th>Assignee</th>
             <th>Priority</th>
+            <th>Status</th>
             <th>Score</th>
         </tr>
     </thead>
@@ -19,6 +30,7 @@
                 <td><%= link_to is[0].subject, issue_path(is[0].id) %></td>
                 <td><%= is[0].assigned_to %></td>
                 <td><%= is[0].priority %></td>
+                <td><%= is[0].status.name %></td>
                 <td><%= is[1] %></td>
             </tr>
         <% end -%>
@@ -34,6 +46,7 @@
             <th>Project</th>
             <th>Subject</th>
             <th>Assignee</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -43,6 +56,7 @@
                 <td><%= link_to issue.project, project_path(issue.project) %></td>
                 <td><%= link_to issue.subject, issue_path(issue.id) %></td>
                 <td><%= issue.assigned_to.try(:name) %></td>
+                <td><%= issue.status.name %></td>
             </tr>
         <% end -%>
     </tbody>

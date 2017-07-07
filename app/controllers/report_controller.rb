@@ -4,9 +4,12 @@ class ReportController < ApplicationController
   before_action :find_project, :authorize
 
   def index
-    #@issues = @project.issues.includes(:custom_values).joins(:status).where('issue_statuses.is_closed = ?', false)
-    #@issues = @project.issues.joins(:status).where('issue_statuses.is_closed = ?', false)
     @issues = collect_issues_recursively(@project)
+    @hide_resolved = !params[:hide_resolved].blank?
+    if @hide_resolved
+      @issues.reject! { |is| is.status.name == 'Resolved' }
+    end
+
     @issues_to_score = @issues.map do |issue|
       score = nil
       reach = nil, confidence = nil, impact = nil
